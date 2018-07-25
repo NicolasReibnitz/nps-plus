@@ -1,5 +1,5 @@
 {
-  "name": "nps",
+  "name": "nps-plus",
   "version": "0.0.0-semantically-released",
   "description": "All the benefits of npm scripts without the cost of a bloated package.json and limits of json",
   "main": "dist/index",
@@ -16,7 +16,7 @@
     "dist"
   ],
   "keywords": [],
-  "author": "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)",
+  "author": "Mehuge <adf@sorcerer.co.uk> (https://github/Mehuge)",
   "license": "MIT",
   "dependencies": {
     "arrify": "^1.0.1",
@@ -74,10 +74,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kentcdodds/nps.git"
+    "url": "https://github.com/nps-plus/nps.git"
   },
   "bugs": {
-    "url": "https://github.com/kentcdodds/nps/issues"
+    "url": "https://github.com/Mehuge/nps-plus/issues"
   },
-  "homepage": "https://github.com/kentcdodds/nps#readme"
+  "homepage": "https://github.com/Mehuge/nps-plus#readme",
+  "contrinuters": [
+	"Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)"
+  ]
 }

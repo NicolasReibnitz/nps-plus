@@ -1,3 +1,34 @@
+# nps-plus
+
+nps-plus is a fork of kentcdodds/nps with the added feature of supporting function as script.  One of the limitations I found with nps is that the script that is executed can only be a string.  
+
+With function as script, a script can now be a function that is called and can return a string that will be exeuted, or even perform work and return true/false or numerical status to indicate success or failure.
+
+```javascript
+module.exports = {
+  scripts: {
+    work: conditionalWorkExample,
+    symlink: functionExample,
+	do: {
+	  work: 'echo hello',
+	},
+  },
+}
+
+function conditionalWorkExample(input) {
+  if (shouldIDoWork()) return 'nps do.work';
+}
+
+function functionExample(input) {
+  try {
+	  fs.symlinkSync('target', 'source')
+	  return 0;	    // success
+  } catch(e) {
+  	return e.code;	// failure
+  }
+}
+```
+
 # nps
 
 All the benefits of npm scripts without the cost of a bloated package.json and limits of json

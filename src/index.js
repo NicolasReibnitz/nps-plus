@@ -1,7 +1,7 @@
 import spawn from 'spawn-command-with-kill'
 import chalk from 'chalk'
 import {oneLine} from 'common-tags'
-import {isString, clone} from 'lodash'
+import {isString, isFunction, clone} from 'lodash'
 import {sync as findUpSync} from 'find-up'
 import managePath from 'manage-path'
 import arrify from 'arrify'
@@ -39,12 +39,38 @@ function runPackageScripts({scriptConfig, scripts, options = {}}) {
 function runPackageScript({scriptConfig, options, input}) {
   const [scriptPrefix, ...args] = input.split(' ')
   const scripts = getScriptsFromConfig(scriptConfig, scriptPrefix)
-  const {scriptName, script} = getScriptToRun(scripts, scriptPrefix) || {}
+  let {scriptName, script} = getScriptToRun(scripts, scriptPrefix) || {}
+  const log = getLogger(getLogLevel(options))
+
+  // function as script
+  if (isFunction(script)) {
+    log.info(`${chalk.gray('nps is calling')} ${chalk.bold(scriptName)}()`)
+    script = script(input)
+    if (
+      script === false ||
+      (typeof script === 'number' && script != NON_ERROR)
+    ) {
+      return Promise.reject({
+        message: chalk.red(`${scriptName} failed with status ${script}`),
+      })
+    }
+    if (
+      script === true ||
+      script === NON_ERROR ||
+      script === null ||
+      script === undefined ||
+      script === ''
+    ) {
+      // explicit success, or implicit success (treat null/undefined as no-op)
+      return Promise.resolve(0)
+    }
+  }
+
   if (!isString(script)) {
     return Promise.reject({
       message: chalk.red(
         oneLine`
-          Scripts must resolve to strings.
+          Scripts must resolve a string or a function.
           There is no script that can be resolved from "${scriptPrefix}"
         `,
       ),
@@ -52,7 +78,6 @@ function runPackageScript({scriptConfig, options, input}) {
     })
   }
   const command = [script, ...args].join(' ').trim()
-  const log = getLogger(getLogLevel(options))
   const showScript = options.scripts
   log.info(
     oneLine`

@@ -1,4 +1,11 @@
-import {each, cloneDeep, isPlainObject, isUndefined, isString} from 'lodash'
+import {
+  each,
+  cloneDeep,
+  isPlainObject,
+  isUndefined,
+  isString,
+  isFunction,
+} from 'lodash'
 import prefixMatches from 'prefix-matches'
 import resolveScriptObjectToString from './resolve-script-object-to-string'
 import kebabAndCamelCasify from './kebab-and-camel-casify'
@@ -11,7 +18,10 @@ function getScriptToRun(config, input) {
   // if the prefix works with another script first
   const defaultlessConfig = removeDefaults(cloneDeep(config))
   const scriptToRun = getScript(defaultlessConfig, input)
-  if (!isUndefined(scriptToRun) && isString(scriptToRun.script)) {
+  if (
+    !isUndefined(scriptToRun) &&
+    (isString(scriptToRun.script) || isFunction(scriptToRun.script))
+  ) {
     return scriptToRun
   } else {
     // fallback to the defaults if no other script was
@@ -25,8 +35,10 @@ function getScript(config, input) {
   if (script) {
     const scriptName = Object.keys(script).shift()
     let scriptToRun = script[scriptName]
-    if (scriptName && isPlainObject(scriptToRun)) {
-      scriptToRun = resolveScriptObjectToString(scriptToRun)
+    if (scriptName) {
+      if (isPlainObject(scriptToRun)) {
+        scriptToRun = resolveScriptObjectToString(scriptToRun)
+      }
     }
     return {
       scriptName,
