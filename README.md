@@ -22,9 +22,10 @@ function conditionalWorkExample(input) {
 function functionExample(input) {
   try {
     fs.symlinkSync('target', 'source')
-    return 0;         // success
+    return 0;       // success
   } catch(e) {
-    return e.code;    // failure
+	console.log(e.message);
+    return 1;       // failure
   }
 }
 ```
