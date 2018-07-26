@@ -9,9 +9,9 @@ module.exports = {
   scripts: {
     work: conditionalWorkExample,
     symlink: functionExample,
-	do: {
-	  work: 'echo hello',
-	},
+    do: {
+      work: 'echo hello',
+    },
   },
 }
 
@@ -21,10 +21,10 @@ function conditionalWorkExample(input) {
 
 function functionExample(input) {
   try {
-	  fs.symlinkSync('target', 'source')
-	  return 0;	    // success
+    fs.symlinkSync('target', 'source')
+    return 0;         // success
   } catch(e) {
-  	return e.code;	// failure
+    return e.code;    // failure
   }
 }
 ```
