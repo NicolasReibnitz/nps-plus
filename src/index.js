@@ -45,7 +45,7 @@ function runPackageScript({scriptConfig, options, input}) {
   // function as script
   if (isFunction(script)) {
     log.info(`${chalk.gray('nps is calling')} ${chalk.bold(scriptName)}()`)
-    script = script(input)
+    script = script(scriptPrefix, args)
     if (
       script === false ||
       (typeof script === 'number' && script != NON_ERROR)
@@ -63,6 +63,22 @@ function runPackageScript({scriptConfig, options, input}) {
     ) {
       // explicit success, or implicit success (treat null/undefined as no-op)
       return Promise.resolve(0)
+    }
+
+    // If script returns a promise, just return the promise
+    if (script instanceof Promise) {
+      return new Promise((resolve, reject) => {
+        script.then(
+          () => resolve(0),
+          error => {
+            reject({
+              message: chalk.red(`${scriptName} failed with ${error}`),
+              ref: 'function-as-script-rejection',
+              error,
+            })
+          },
+        )
+      })
     }
   }
 

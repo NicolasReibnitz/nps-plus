@@ -2,7 +2,7 @@
 
 nps-plus is a fork of kentcdodds/nps with the added feature of supporting function as script.  One of the limitations I found with nps is that the script that is executed can only be a string.  
 
-With function as script, a script can now be a function that is called and can return a string that will be exeuted, or even perform work and return true/false or numerical status to indicate success or failure.
+With function as script, a script can now be a function that is called and can return a string that will be exeuted, or even perform work and return true/false or numerical status to indicate success or failure, or even a promise to return one of those later.
 
 ```javascript
 module.exports = {
@@ -29,6 +29,29 @@ function functionExample(input) {
   }
 }
 ```
+
+## Changes in 1.0.2
+
+* Functions can now return promises.  This means that functions can now do asynchronous work, and nps-plus will wait for them to resolve.
+
+* The arguments passed to the function have changed.  Instead of the raw input, the function is passed `scriptName` as the first argument and an `args` array as the second argument.
+
+The following example combines both these changes
+
+```javascript
+module.exports = {
+  scripts: {
+    wait: 'task1 "timeout 1000" task2',
+    timeout: (scriptName, args) => {
+      return new Promise((resolve, reject) => {
+        setTimeout(resolve, args[0] || 0)
+      });
+    }
+  }
+};
+```
+
+Ofc a timeout isn't particularly useful, it just for illustration.
 
 # nps
 
