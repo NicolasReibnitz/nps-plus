@@ -1,7 +1,7 @@
 {
   "name": "nps-plus",
-  "version": "1.0.1",
-  "description": "All the benefits of npm scripts without the cost of a bloated package.json and limits of json",
+  "version": "1.0.2",
+  "description": "All the benefits of nps plus the power of functions",
   "main": "dist/index",
   "scripts": {
     "start": "nps",
@@ -81,6 +81,6 @@
   },
   "homepage": "https://github.com/Mehuge/nps-plus#readme",
   "contrinuters": [
-	"Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)"
+    "Kent C. Dodds <kent@doddsfamily.us> (http://kentcdodds.com/)"
   ]
 }

@@ -61,3 +61,11 @@ This happens if you pass flags to `nps` that are not valid (like `nps --invalid-
 ### To Fix:
 
 Make sure you put your scripts and the relevant arguments in quotes: `nps "build --fast"`
+
+## Function as Script Rejection
+
+This means the function as script being called rejected the promise (failed).
+
+### To Fix:
+
+Investigate the indicated reason for failure.
