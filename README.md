@@ -41,12 +41,10 @@ The following example combines both these changes
 ```javascript
 module.exports = {
   scripts: {
-    wait: 'task1 "timeout 1000" task2',
-    timeout: (scriptName, args) => {
-      return new Promise((resolve, reject) => {
-        setTimeout(resolve, args[0] || 0)
-      });
-    }
+    wait: 'task1 "sleep 1000" task2',
+    sleep: (scriptName, args) => new Promise((resolve, reject) => {
+      setTimeout(resolve, args[0] | 0)
+    })
   }
 };
 ```
