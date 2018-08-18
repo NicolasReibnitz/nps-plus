@@ -26,23 +26,20 @@ test('spawn called with the expected command', () => {
 
 test('spawn called and appends options', () => {
   const testCommand = 'jest'
-  return testSpawnCall({test: testCommand}, [
-    'test',
-    '--',
-    '--watch',
-  ]).then(({command}) => {
-    expect(command).toBe(`${testCommand} --watch`)
-  })
+  return testSpawnCall({test: testCommand}, ['test', '--', '--watch']).then(
+    ({command}) => {
+      expect(command).toBe(`${testCommand} --watch`)
+    },
+  )
 })
 
 test('spawn called and appends options to default', () => {
   const testCommand = 'jest'
-  return testSpawnCall({default: testCommand}, [
-    '--',
-    '--watch',
-  ]).then(({command}) => {
-    expect(command).toBe(`${testCommand} --watch`)
-  })
+  return testSpawnCall({default: testCommand}, ['--', '--watch']).then(
+    ({command}) => {
+      expect(command).toBe(`${testCommand} --watch`)
+    },
+  )
 })
 
 test('spawn.on called with "close" and "error"', () => {
@@ -61,7 +58,7 @@ test('returns a log object when no script is found', () => {
     expect(error).toEqual({
       message: chalk.red(
         oneLine`
-          Scripts must resolve to strings.
+          Scripts must resolve to a string or a function.
           There is no script that can be
           resolved from "lint"
         `,
@@ -182,7 +179,7 @@ test('returns a log object when a script does not exist', () => {
     expect(error).toEqual({
       message: chalk.red(
         oneLine`
-          Scripts must resolve to strings.
+          Scripts must resolve to a string or a function.
           There is no script that can be
           resolved from "dev"
         `,
