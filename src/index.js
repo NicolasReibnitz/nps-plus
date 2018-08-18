@@ -8,6 +8,7 @@ import arrify from 'arrify'
 import getScriptToRun from './get-script-to-run'
 import getScriptsFromConfig from './get-scripts-from-config'
 import getLogger, {getLogLevel} from './get-logger'
+import {access} from 'fs'
 
 const NON_ERROR = 0
 
@@ -17,7 +18,10 @@ function runPackageScripts({scriptConfig, scripts, options = {}}) {
   if (scripts.length === 0) {
     scripts = ['default']
   }
-  let scriptNames = arrify(scripts)
+  let scriptNames = arrify(scripts).reduce(
+    (a, c) => (a.push(...c.split(',')), a),
+    [],
+  )
 
   const separatorIndex = scriptNames.indexOf('--')
   if (separatorIndex >= 0) {
@@ -86,7 +90,7 @@ function runPackageScript({scriptConfig, options, input}) {
     return Promise.reject({
       message: chalk.red(
         oneLine`
-          Scripts must resolve a string or a function.
+          Scripts must resolve to a string or a function.
           There is no script that can be resolved from "${scriptPrefix}"
         `,
       ),

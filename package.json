@@ -1,6 +1,6 @@
 {
   "name": "nps-plus",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "All the benefits of nps plus the power of functions",
   "main": "dist/index",
   "scripts": {
