@@ -1,6 +1,6 @@
 # nps-plus
 
-nps-plus is a fork of kentcdodds/nps with the added feature of supporting function as script.  One of the limitations I found with nps is that the script that is executed can only be a string.  
+nps-plus is a fork of kentcdodds/nps with the added feature of supporting function as script.  One of the limitations I found with nps is that the script that is executed can only be a string.
 
 With function as script, a script can now be a function that is called and can return a string that will be exeuted, or even perform work and return true/false or numerical status to indicate success or failure, or even a promise to do work and return status later.
 
@@ -49,7 +49,18 @@ module.exports = {
 };
 ```
 
-Ofc a timeout isn't particularly useful, it just for illustration.
+Ofc a sleep isn't particularly useful, it just for illustration.
+
+## Changes in 1.0.4
+
+Re-introduced support for comma separated script names that was supported in `p-s` v3. In later versions of `nps` (previously known as `p-s`) support for , was dropped in favour of space separated script names.
+
+In v3 `nps a,b,c` became `nps a b c` in v4.
+In v3 `nps echo arg` because `nps 'echo arg'` in v4.
+
+`nps-plus` supports a partial return to the old style syntax for better backward compatibility. In nps can mix and match , and space.
+
+In `nps-plus` you can do `nps a b c` or `nps a,b,c` or even `nps a,b c` and all three forms will run the scripts a, b and c.  `nps-plus` does not support `p-s` v3's `nps echo arg` syntax however, it only supports `nps` v4's `nps 'echo arg'` syntax.
 
 # nps
 
