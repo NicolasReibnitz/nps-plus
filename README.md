@@ -29,6 +29,10 @@ function functionExample(input) {
   }
 }
 ```
+## Changes in 1.0.6
+
+* Dependency updates and address vunerabilities
+
 ## Changes in 1.0.5
 
 * Dependency updates to address vunerabilities

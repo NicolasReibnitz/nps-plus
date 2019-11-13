@@ -40,7 +40,9 @@ test('allows you to log warnings/errors with a ref', () => {
   expect(console.warn).toHaveBeenCalledTimes(1)
   expect(console.warn).toHaveBeenCalledWith(
     ...message,
-    'https://github.com/mehuge/nps-plus/blob/v1.0.5/other/ERRORS_AND_WARNINGS.md#han-solo',
+    `https://github.com/mehuge/nps-plus/blob/v${
+      process.env.npm_package_version
+    }/other/ERRORS_AND_WARNINGS.md#han-solo`,
     'this is extra',
     'stuff',
   )
